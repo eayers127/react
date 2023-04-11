@@ -59,7 +59,7 @@ function App() {
         {todos.map((todo, index) => (
           <li key={index}>
             {todo}
-            <button onClick={() => handleDelete(index)}>X</button>
+            <button onClick={() => handleDelete(index)}>Delete</button>
             <button onClick={() => toggleEdit(index)}>Edit</button>
           </li>
         ))}
