@@ -1,37 +1,42 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
-
-// function App() {
-//   const [count, setCount] = useState(0)
-
-//   return (
-//     <div className="App">
-//       <h1>React Todo App</h1>
-//       <div className="card">
-//         <input placeholder='add new todo'></input>
-//         <button>Add Todo</button>
-//         <ul>
-//           <li>
-           
-//           </li>
-//         </ul>
-//       </div>
-//       <p className="read-the-docs">
-//         Click on the Vite and React logos to learn more
-//       </p>
-//     </div>
-//   )
-// }
-
-
 
 
 
 function App() {
   const [todos, setTodos] = useState([]);
   const [inputValue, setInputValue] = useState('');
+  const [editing, setEditing] = useState(false);
+  let viewMode = {};
+  let editMode = {};
+  editMode.className = "editing"
+  if (editing) {
+    viewMode.display = 'none';
+    
+  } else {
+    editMode.display = 'none';
+  }
+
+  const handleUpdatedDone = (event) => {
+    if (event.key === 'Enter') {
+      setEditing(false);
+    }
+  };
+
+  const toggleEdit = () => {
+    setEditing(!editing);
+    handleUpdatedDone();
+  };
+  const updateTodo = (updatedTodo, id) => {
+    setTodos(
+      todos.map((todo) =>{
+        if(todo.id === id) {
+          todo = updatedTodo;
+        }
+        return recipe;
+      })
+    )
+  }
 
   function handleSubmit(event) {
     event.preventDefault();
@@ -48,13 +53,14 @@ function App() {
       <h1>Todo List</h1>
       <form onSubmit={handleSubmit}>
         <input type="text" value={inputValue} onChange={e => setInputValue(e.target.value)} />
-        <button type="submit">Add</button>
+        <button type="submit">Add Todo</button>
       </form>
       <ul>
         {todos.map((todo, index) => (
           <li key={index}>
             {todo}
             <button onClick={() => handleDelete(index)}>X</button>
+            <button onClick={() => toggleEdit(index)}>Edit</button>
           </li>
         ))}
       </ul>
